@@ -1,0 +1,50 @@
+﻿<Window x:Class="SumApp.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:viewModel="clr-namespace:SumApp.ViewModels"
+        xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+        xmlns:behaviors="clr-namespace:SumApp.MVVMPatterns.Behaviors"
+        FocusManager.FocusedElement="{Binding ElementName=firstTextBox}"
+        Title="Raz SumApp" Height="250" Width="450" MinHeight="250" MinWidth="450"
+        FontFamily="Arial">
+    <Window.DataContext>
+        <viewModel:MainViewModel/>
+    </Window.DataContext>
+
+    <Grid Margin="10">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="200"/>
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        
+        <StackPanel Grid.Row="0" Grid.Column="0" HorizontalAlignment="Left" Orientation="Vertical">
+            <TextBlock Text="First Number"/>
+            <TextBox x:Name="firstTextBox" Height="24" Width="180" Text="{Binding Number1, UpdateSourceTrigger=PropertyChanged}">
+                <i:Interaction.Behaviors>
+                    <behaviors:EnterKeyBehavior Command="{Binding AddCommand}" />
+                </i:Interaction.Behaviors>
+            </TextBox>
+        </StackPanel>
+        <StackPanel Grid.Row="0" Grid.Column="1" HorizontalAlignment="Left" Orientation="Vertical">
+            <TextBlock Text="Second Number"/>
+            <TextBox Height="24" Width="180" Text="{Binding Number2, UpdateSourceTrigger=PropertyChanged}">
+                <i:Interaction.Behaviors>
+                    <behaviors:EnterKeyBehavior Command="{Binding AddCommand}" />
+                </i:Interaction.Behaviors>
+            </TextBox>
+        </StackPanel>
+            <Button Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3" Margin="150 20 0 0" Width="80" Height="24"
+                    Content="Calculate" Command="{Binding AddCommand}" IsTabStop="False" HorizontalAlignment="Left" />
+        
+        <StackPanel Grid.Row="3" Grid.ColumnSpan="3"  Margin="0 20 0 0" Orientation="Vertical">
+            <TextBlock Text="Result" FontWeight="Bold" FontSize="20" />
+            <TextBlock Height="24" Text="{Binding Result}" FontWeight="Bold" FontSize="18" />
+        </StackPanel>
+    </Grid>
+</Window>
